@@ -1,5 +1,8 @@
 package org.example;
 
+import org.example.converter.BirthDateConverter;
+import org.example.model.BirthDate;
+import org.example.model.Role;
 import org.example.model.User;
 import org.hibernate.Transaction;
 import org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy;
@@ -12,9 +15,10 @@ public class HibernateRunner {
 
     public static void main(String[] args) {
 
-        var configuration = new Configuration();
-        configuration.setPhysicalNamingStrategy(new CamelCaseToUnderscoresNamingStrategy());
-        configuration.addAnnotatedClass(User.class);
+        var configuration = new Configuration()
+                .setPhysicalNamingStrategy(new CamelCaseToUnderscoresNamingStrategy())
+                .addAttributeConverter(BirthDateConverter.class)
+                .addAnnotatedClass(User.class);
 
         try (var sessionFactory = configuration.buildSessionFactory();
              var session = sessionFactory.openSession()) {
@@ -26,8 +30,8 @@ public class HibernateRunner {
                         .username("zen")
                         .firstname("Ban")
                         .lastname("Robinzon")
-                        .birthDate(LocalDate.of(2001, 4, 25))
-                        .age(22)
+                        .birthDate(new BirthDate(LocalDate.of(2001, 4, 25)))
+                        .role(Role.ADMIN)
                         .build();
                 session.persist(user);
                 transaction.commit();

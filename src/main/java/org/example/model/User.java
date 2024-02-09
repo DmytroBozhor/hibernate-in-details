@@ -1,15 +1,10 @@
 package org.example.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
@@ -20,18 +15,15 @@ import java.time.LocalDate;
 public class User {
 
     @Id
-    @Column(name = "username")
     private String username;
 
-    @Column(name = "firstname")
     private String firstname;
 
-    @Column(name = "lastname")
     private String lastname;
 
-    @Column(name = "birth_date")
-    private LocalDate birthDate;
+//    @Convert(converter = BirthDateConverter.class)
+    private BirthDate birthDate;
 
-    @Column(name = "age")
-    private Integer age;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 }
