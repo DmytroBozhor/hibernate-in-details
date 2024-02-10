@@ -1,10 +1,10 @@
-CREATE TABLE users
+CREATE TABLE IF NOT EXISTS users
 (
     username   VARCHAR(128) PRIMARY KEY,
     firstname  VARCHAR(128),
     lastname   VARCHAR(128),
     birth_date DATE,
-    role       INT
+    role       VARCHAR(32)
 );
 
 DROP TABLE IF EXISTS users;

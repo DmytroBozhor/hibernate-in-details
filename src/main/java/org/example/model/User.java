@@ -17,12 +17,9 @@ public class User {
     @Id
     private String username;
 
-    private String firstname;
-
-    private String lastname;
-
-//    @Convert(converter = BirthDateConverter.class)
-    private BirthDate birthDate;
+    @Embedded
+    @AttributeOverride(name = "birthDate", column = @Column(name = "birth_date"))
+    private PersonalInfo personalInfo;
 
     @Enumerated(EnumType.STRING)
     private Role role;
