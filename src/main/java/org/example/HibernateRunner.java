@@ -24,7 +24,7 @@ public class HibernateRunner {
             var transaction = session.beginTransaction();
 
             var user = User.builder()
-                    .username("sien")
+                    .username("zen3")
                     .personalInfo(PersonalInfo.builder()
                             .firstname("Lichigo")
                             .lastname("Damenson")
