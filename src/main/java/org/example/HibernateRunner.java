@@ -24,7 +24,7 @@ public class HibernateRunner {
             var transaction = session.beginTransaction();
 
             var user = User.builder()
-                    .username("zen3")
+                    .username("zen4")
                     .personalInfo(PersonalInfo.builder()
                             .firstname("Lichigo")
                             .lastname("Damenson")
@@ -33,9 +33,12 @@ public class HibernateRunner {
                     .role(Role.USER)
                     .build();
 
+            // Here it will go to the db for the id value, so this user can be stored in the persistent context
+            // PS: we cannot put anything to the persistent context unless we have a primary key to make a key - value match
             session.persist(user);
             log.info("User is in a persistent state: {}", user);
 
+            // Here it will flush the persistent context which means making an insertion query
             transaction.commit();
         } catch (Exception e) {
             log.error("Exception has been encountered", e);
