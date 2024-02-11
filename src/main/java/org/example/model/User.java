@@ -14,16 +14,12 @@ import lombok.NoArgsConstructor;
 @Table(name = "users", schema = "public")
 public class User {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @EmbeddedId
+    @AttributeOverride(name = "birthDate", column = @Column(name = "birth_date"))
+    private PersonalInfo personalInfo;
 
     @Column(unique = true)
     private String username;
-
-    @Embedded
-    @AttributeOverride(name = "birthDate", column = @Column(name = "birth_date"))
-    private PersonalInfo personalInfo;
 
     @Enumerated(EnumType.STRING)
     private Role role;

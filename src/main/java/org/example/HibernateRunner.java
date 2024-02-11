@@ -18,28 +18,44 @@ public class HibernateRunner {
         var configuration = HibernateUtil.getConfiguration();
         log.info("Configuration has been initialized: {}", configuration);
 
-        try (var sessionFactory = configuration.buildSessionFactory();
-             var session = sessionFactory.openSession()) {
-            log.debug("Session has been opened: {}", session);
-            var transaction = session.beginTransaction();
+        try (var sessionFactory = configuration.buildSessionFactory()) {
 
-            var user = User.builder()
-                    .username("zen3")
-                    .personalInfo(PersonalInfo.builder()
-                            .firstname("Lichigo")
-                            .lastname("Damenson")
-                            .birthDate(new BirthDate(LocalDate.of(2000, 7, 17)))
-                            .build())
-                    .role(Role.USER)
-                    .build();
+            try (var session = sessionFactory.openSession()) {
+                log.debug("Session has been opened: {}", session);
+                var transaction = session.beginTransaction();
 
-            session.persist(user);
-            log.info("User is in a persistent state: {}", user);
+                var user = User.builder()
+                        .username("zen3")
+                        .personalInfo(PersonalInfo.builder()
+                                .firstname("Lichigo")
+                                .lastname("Damenson")
+                                .birthDate(new BirthDate(LocalDate.of(2000, 7, 17)))
+                                .build())
+                        .role(Role.USER)
+                        .build();
 
-            transaction.commit();
-        } catch (Exception e) {
-            log.error("Exception has been encountered", e);
-            throw new RuntimeException(e);
+                session.persist(user);
+                log.info("User is in a persistent state: {}", user);
+
+                transaction.commit();
+            }
+
+            try (var session = sessionFactory.openSession()) {
+                log.debug("Session has been opened: {}", session);
+                session.beginTransaction();
+
+                var id = PersonalInfo.builder()
+                        .firstname("Lichigo")
+                        .lastname("Damenson")
+                        .birthDate(new BirthDate(LocalDate.of(2000, 7, 17)))
+                        .build();
+
+                var user = session.get(User.class, id);
+                log.info("Obtained user from the db: {}", user);
+
+                session.getTransaction().commit();
+            }
+
         }
     }
 }
