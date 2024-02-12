@@ -1,10 +1,7 @@
 package org.example;
 
 import lombok.extern.slf4j.Slf4j;
-import org.example.model.BirthDate;
-import org.example.model.PersonalInfo;
-import org.example.model.Role;
-import org.example.model.User;
+import org.example.model.*;
 import org.example.util.HibernateUtil;
 
 import java.time.LocalDate;
@@ -18,23 +15,27 @@ public class HibernateRunner {
         var configuration = HibernateUtil.getConfiguration();
         log.info("Configuration has been initialized: {}", configuration);
 
+        var company = Company.builder()
+//                .id(1L)
+                .name("Google60")
+                .build();
+        var user = User.builder()
+                .username("zen70")
+                .personalInfo(PersonalInfo.builder()
+                        .firstname("Lichigo")
+                        .lastname("Damenson70")
+                        .birthDate(new BirthDate(LocalDate.of(2000, 7, 17)))
+                        .build())
+                .role(Role.USER)
+                .company(company)
+                .build();
+
         try (var sessionFactory = configuration.buildSessionFactory();
              var session = sessionFactory.openSession()) {
             log.debug("Session has been opened: {}", session);
             var transaction = session.beginTransaction();
 
-            var user = User.builder()
-                    .username("zen3")
-                    .personalInfo(PersonalInfo.builder()
-                            .firstname("Lichigo")
-                            .lastname("Damenson")
-                            .birthDate(new BirthDate(LocalDate.of(2000, 7, 17)))
-                            .build())
-                    .role(Role.USER)
-                    .build();
-
-            session.persist(user);
-            log.info("User is in a persistent state: {}", user);
+            session.persist(company);
 
             transaction.commit();
         } catch (Exception e) {
