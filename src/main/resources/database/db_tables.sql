@@ -18,3 +18,13 @@ CREATE TABLE IF NOT EXISTS company
 );
 
 DROP TABLE IF EXISTS company;
+
+CREATE TABLE IF NOT EXISTS "department"
+(
+    "id"         BIGSERIAL PRIMARY KEY,
+    "name"       VARCHAR(128),
+    "capacity"   INT,
+    "company_id" BIGINT REFERENCES company (id)
+);
+
+DROP TABLE IF EXISTS department;
