@@ -28,3 +28,7 @@ CREATE TABLE IF NOT EXISTS "department"
 );
 
 DROP TABLE IF EXISTS department;
+
+TRUNCATE users;
+TRUNCATE department;
+TRUNCATE company;

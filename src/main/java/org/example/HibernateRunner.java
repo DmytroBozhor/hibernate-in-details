@@ -1,5 +1,6 @@
 package org.example;
 
+import jakarta.persistence.EntityManager;
 import lombok.Cleanup;
 import lombok.extern.slf4j.Slf4j;
 import org.example.model.*;
@@ -25,9 +26,7 @@ public class HibernateRunner {
 
         session.beginTransaction();
 
-
-        session.persist(company);
-
+        
 
         session.getTransaction().commit();
     }

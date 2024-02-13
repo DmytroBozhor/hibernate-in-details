@@ -3,6 +3,7 @@ package org.example.util;
 import lombok.experimental.UtilityClass;
 import org.example.converter.BirthDateConverter;
 import org.example.model.Company;
+import org.example.model.Department;
 import org.example.model.User;
 import org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy;
 import org.hibernate.cfg.Configuration;
@@ -15,6 +16,7 @@ public class HibernateUtil {
                 .setPhysicalNamingStrategy(new CamelCaseToUnderscoresNamingStrategy())
                 .addAttributeConverter(BirthDateConverter.class)
                 .addAnnotatedClass(User.class)
+                .addAnnotatedClass(Department.class)
                 .addAnnotatedClass(Company.class);
     }
 
