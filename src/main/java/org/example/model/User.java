@@ -3,13 +3,16 @@ package org.example.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Data
+//@EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Entity
 @Table(name = "users")
-public class User {
+public class User /*extends AuditableEntity*/ {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
