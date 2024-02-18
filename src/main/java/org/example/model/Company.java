@@ -4,7 +4,9 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -22,14 +24,14 @@ public class Company {
     @Builder.Default
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    @OneToMany(mappedBy = "company", cascade = CascadeType.PERSIST)
-    private List<User> users = new ArrayList<>();
+    @OneToMany(mappedBy = "company", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private Set<User> users = new HashSet<>();
 
     @Builder.Default
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    @OneToMany(mappedBy = "company", cascade = CascadeType.PERSIST)
-    private List<Department> departments = new ArrayList<>();
+    @OneToMany(mappedBy = "company", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private Set<Department> departments = new HashSet<>();
 
     public boolean addUser(User user) {
         user.setCompany(this);

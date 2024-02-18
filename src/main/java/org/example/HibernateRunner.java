@@ -1,5 +1,6 @@
 package org.example;
 
+import jakarta.persistence.Tuple;
 import lombok.Cleanup;
 import lombok.extern.slf4j.Slf4j;
 import org.example.model.*;
@@ -10,6 +11,7 @@ import org.example.util.HibernateUtil;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.function.Consumer;
 
 
 @Slf4j
@@ -19,16 +21,29 @@ public class HibernateRunner {
 
         var configuration = HibernateUtil.getConfiguration();
 
-        var users = getUsers();
-        var departments = getDepartments();
-        var company = getCompany(users, departments);
+//        var users = getUsers();
+//        var departments = getDepartments();
+//        var companies = getCompany(users, departments);
 
         @Cleanup var sessionFactory = configuration.buildSessionFactory();
         @Cleanup var session = sessionFactory.openSession();
 
         session.beginTransaction();
 
-        
+        var query = "SELECT c " +
+                "FROM Company c " +
+                "JOIN FETCH c.users " +
+                "JOIN FETCH c.departments";
+
+        var companies = session.createQuery(query, Company.class).list();
+
+        companies.forEach(company -> {
+            var departments = company.getDepartments();
+            var users = company.getUsers();
+
+            System.out.println(departments);
+            System.out.println(users);
+        });
 
         session.getTransaction().commit();
     }
@@ -49,11 +64,14 @@ public class HibernateRunner {
     }
 
     private static Company getCompany(List<User> users, List<Department> departments) {
-        return Company.builder()
+        var company = Company.builder()
                 .name("Google")
-                .users(users)
-                .departments(departments)
                 .build();
+
+        users.forEach(company::addUser);
+        departments.forEach(company::addDepartment);
+
+        return company;
     }
 
     private static List<User> getUsers() {

@@ -10,6 +10,7 @@ import org.junit.jupiter.api.*;
 
 import java.time.LocalDate;
 import java.util.Collections;
+import java.util.List;
 import java.util.function.Consumer;
 
 import static org.assertj.core.api.Assertions.*;
@@ -51,12 +52,11 @@ public class AppTests {
         company.addDepartment(department);
 
         session = sessionFactory.openSession();
+        session.beginTransaction();
     }
 
     @Test
     void findUserWithCriteriaAPI() {
-        session.beginTransaction();
-
         session.persist(company);
 
         var criteriaBuilder = session.getCriteriaBuilder();
@@ -71,12 +71,11 @@ public class AppTests {
 
         assertThat(userOptional).isPresent();
         assertThat(userOptional.get()).isEqualTo(this.user);
-
-        session.getTransaction().commit();
     }
 
     @AfterEach
     void closeSession() {
+        session.getTransaction().commit();
         session.close();
     }
 
