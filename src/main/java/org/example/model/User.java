@@ -2,8 +2,8 @@ package org.example.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.time.LocalDateTime;
+import org.example.model.other.PersonalInfo;
+import org.example.model.other.Role;
 
 @Data
 //@EqualsAndHashCode(callSuper = false)

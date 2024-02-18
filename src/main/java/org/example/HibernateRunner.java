@@ -1,9 +1,11 @@
 package org.example;
 
-import jakarta.persistence.EntityManager;
 import lombok.Cleanup;
 import lombok.extern.slf4j.Slf4j;
 import org.example.model.*;
+import org.example.model.other.BirthDate;
+import org.example.model.other.PersonalInfo;
+import org.example.model.other.Role;
 import org.example.util.HibernateUtil;
 
 import java.time.LocalDate;

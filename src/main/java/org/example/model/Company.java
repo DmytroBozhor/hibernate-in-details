@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-@ToString(exclude = {"users", "departments"})
-@EqualsAndHashCode(exclude = {"users", "departments"})
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -22,10 +20,14 @@ public class Company {
     private String name;
 
     @Builder.Default
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     @OneToMany(mappedBy = "company", cascade = CascadeType.PERSIST)
     private List<User> users = new ArrayList<>();
 
     @Builder.Default
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     @OneToMany(mappedBy = "company", cascade = CascadeType.PERSIST)
     private List<Department> departments = new ArrayList<>();
 

@@ -1,4 +1,4 @@
-package org.example.model;
+package org.example.model.other;
 
 import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;

@@ -2,7 +2,7 @@ package org.example.converter;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
-import org.example.model.BirthDate;
+import org.example.model.other.BirthDate;
 
 import java.sql.Date;
 import java.util.Optional;
